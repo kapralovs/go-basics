@@ -5,6 +5,10 @@ import (
 	"net"
 )
 
+/*
+	объявляем мапу с ключом string, который будет обозначать цвет на английском,
+ 	и значением string для хранения соответствующего для указанного в ключе названия цвета на русском языке
+*/
 var dict = map[string]string{
 	"red":    "красный",
 	"green":  "зеленый",
@@ -13,14 +17,20 @@ var dict = map[string]string{
 }
 
 func main() {
+	/*
+		объявляем объект типа net.Listen,
+		который в качестве параметров принимает протокол (tcp),
+		 и номаер порта, который он будет слушать (4545)
+	*/
 	listener, err := net.Listen("tcp", ":4545")
 
-	if err != nil {
-		fmt.Println(err)
-		return
+	if err != nil { //если ошибка не равна nil...
+		fmt.Println(err) //...то выводим ошибку на экран...
+		return           //...и выходим из программы
 	}
-	defer listener.Close()
-	fmt.Println("Server is listening...")
+	defer listener.Close() //закрываем объект listener
+
+	fmt.Println("Server is listening...") //в случае успешного запуска выводим сообщение о том что "сервер слушает"
 	for {
 		conn, err := listener.Accept()
 		if err != nil {
